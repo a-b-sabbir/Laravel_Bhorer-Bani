@@ -17,7 +17,6 @@ Route::get('/', function () {
 Route::resource('users', UserController::class);
 Route::resource('news', NewsController::class);
 Route::resource('advertisements', AdvertisementController::class);
-Route::resource('requirements', RequirementController::class);
 Route::resource('categories', CategoryController::class);
 Route::resource('roles', RoleController::class);
 Route::resource('representatives', RepresentativesController::class);
