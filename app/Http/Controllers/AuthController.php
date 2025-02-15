@@ -75,4 +75,25 @@ class AuthController extends Controller
             'data' => null
         ]);
     }
+
+    public function logout(Request $request)
+    {
+        $user = $request->user();
+    
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User not authenticated',
+            ], 401);
+        }
+    
+        // Revoke the current access token
+        $request->user()->token()->revoke();
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'User logged out successfully',
+        ]);
+    }
+    
 }
