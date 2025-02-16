@@ -3,91 +3,137 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    // Display a listing of the users.
+    /**
+     * Display a listing of the users.
+     */
     public function index()
     {
-        $users = User::with('role')->get(); // eager loading the related role
-        return view('users.index', compact('users')); // Pass data to the index view
+        $users = User::latest()->paginate(10);
+        return view('users.index', compact('users'));
     }
 
-    // Show the form for creating a new user.
+    /**
+     * Show the form for creating a new user.
+     */
     public function create()
     {
-        $roles = Role::all(); // Retrieve all roles for the user to choose from
-        return view('users.create', compact('roles')); // Return the create view
+        return view('users.create');
     }
 
-    // Store a newly created user in storage.
+    /**
+     * Store a newly created user in storage.
+     */
     public function store(Request $request)
     {
-        // Validate the incoming request data
-        $validated = $request->validate([
-            'role_id' => 'required|exists:roles,id',
-            'name' => 'required|string|max:255',
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
+            'bangla_name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'father_name' => 'required|string|max:255',
+            'mother_name' => 'required|string|max:255',
+            'mobile_number' => 'required|string|max:20',
+            'whatsapp_number' => 'nullable|string|max:20',
+            'dob' => 'required|date',
+            'education_qualifications' => 'required|string',
+            'national_id' => 'required|string|max:50',
+            'interested_position' => 'required|string|max:255',
+            'responsible_place_name' => 'required|string|max:255',
+            'accept_terms_conditions' => 'required|boolean',
+            'password' => 'required|min:8|confirmed',
         ]);
 
-        // Hash password before saving
-        $validated['password'] = Hash::make($validated['password']);
+        // Image Upload
+        $imagePath = $request->file('image')->store('users', 'public');
 
-        // Create the new user
-        User::create($validated);
+        // Create User
+        User::create([
+            'image' => $imagePath,
+            'email' => $request->email,
+            'bangla_name' => $request->bangla_name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'father_name' => $request->father_name,
+            'mother_name' => $request->mother_name,
+            'mobile_number' => $request->mobile_number,
+            'whatsapp_number' => $request->whatsapp_number,
+            'dob' => $request->dob,
+            'education_qualifications' => $request->education_qualifications,
+            'national_id' => $request->national_id,
+            'interested_position' => $request->interested_position,
+            'responsible_place_name' => $request->responsible_place_name,
+            'accept_terms_conditions' => $request->accept_terms_conditions,
+            'password' => Hash::make($request->password),
+        ]);
 
-        // Redirect back with success message
-        return redirect()->route('users.index')->with('success', 'User created successfully!');
+        return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
-    // Display the specified user.
+    /**
+     * Display the specified user.
+     */
     public function show(User $user)
     {
-        $user->load('role'); // Eager load the role data
-        return view('users.show', compact('user')); // Return the show view
+        return view('users.show', compact('user'));
     }
 
-    // Show the form for editing the specified user.
+    /**
+     * Show the form for editing the specified user.
+     */
     public function edit(User $user)
     {
-        $roles = Role::all(); // Get all available roles for updating the user
-        return view('users.edit', compact('user', 'roles')); // Return the edit view
+        return view('users.edit', compact('user'));
     }
 
-    // Update the specified user in storage.
+    /**
+     * Update the specified user in storage.
+     */
     public function update(Request $request, User $user)
     {
-        // Validate the incoming request data
-        $validated = $request->validate([
-            'role_id' => 'required|exists:roles,id',
-            'name' => 'required|string|max:255',
+        $request->validate([
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8|confirmed',
+            'bangla_name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'father_name' => 'required|string|max:255',
+            'mother_name' => 'required|string|max:255',
+            'mobile_number' => 'required|string|max:20',
+            'whatsapp_number' => 'nullable|string|max:20',
+            'dob' => 'required|date',
+            'education_qualifications' => 'required|string',
+            'national_id' => 'required|string|max:50',
+            'interested_position' => 'required|string|max:255',
+            'responsible_place_name' => 'required|string|max:255',
+            'accept_terms_conditions' => 'required|boolean',
         ]);
 
-        // If password is provided, hash it
-        if ($request->filled('password')) {
-            $validated['password'] = Hash::make($validated['password']);
+        if ($request->hasFile('image')) {
+            Storage::delete('public/' . $user->image);
+            $imagePath = $request->file('image')->store('users', 'public');
+            $user->image = $imagePath;
         }
 
-        // Update the user with the validated data
-        $user->update($validated);
+        $user->update($request->except(['password']));
 
-        // Redirect back with success message
-        return redirect()->route('users.index')->with('success', 'User updated successfully!');
+        return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
 
-    // Remove the specified user from storage.
+    /**
+     * Remove the specified user from storage.
+     */
     public function destroy(User $user)
     {
-        // Delete the user
+        Storage::delete('public/' . $user->image);
         $user->delete();
 
-        // Redirect back with success message
-        return redirect()->route('users.index')->with('success', 'User deleted successfully!');
+        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 }

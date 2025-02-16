@@ -19,10 +19,23 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'image',
         'email',
-        'role_id',
         'password',
+        'bangla_name',
+        'first_name',
+        'last_name',
+        'father_name',
+        'mother_name',
+        'mobile_number',
+        'whatsapp_number',
+        'dob',
+        'education_qualifications',
+        'national_id',
+        'interested_position',
+        'responsible_place_name',
+        'accept_terms_conditions',
+        'role_id',
     ];
 
 
@@ -31,18 +44,18 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class,'role_id');
     }
 
-    public function representative()
+    public function address()
     {
-        return $this->hasOne(Representative::class);
+        return $this->hasOne(UserAddress::class);
+    }
+    public function news()
+    {
+        return $this->hasMany(News::class);
     }
 
     /**
      * Get the addresses of the representative.
      */
-    public function addresses()
-    {
-        return $this->hasOneThrough(RepresentativeAddress::class, Representative::class);
-    }
 
 
 

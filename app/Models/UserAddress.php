@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RepresentativeAddress extends Model
+class UserAddress extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'representative_id',
+        'user_id',
         'permanent_district',
         'permanent_sub_district',
         'permanent_municipality',
@@ -27,19 +27,11 @@ class RepresentativeAddress extends Model
         'current_house_road_number',
     ];
 
-    /**
+        /**
      * Get the representative that owns the address.
-     */
-    public function representative()
-    {
-        return $this->belongsTo(Representative::class, 'representative_id');
-    }
-
-    /**
-     * Get the user associated with the address.
      */
     public function user()
     {
-        return $this->belongsToThrough(User::class, Representative::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

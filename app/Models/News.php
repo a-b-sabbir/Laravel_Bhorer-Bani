@@ -11,7 +11,7 @@ class News extends Model
 
     protected $fillable = ['thumbnail', 'splash', 'type', 'meta', 'division', 'district', 'subdistrict', 'category_1', 'category_2', 'category_3', 'headline', 'subtitle', 'content', 'date', 'reporter_id', 'category_id', 'published_at', 'status'];
 
-    public function reporter()
+    public function user()
     {
         return $this->belongsTo(User::class, 'reporter_id');
     }

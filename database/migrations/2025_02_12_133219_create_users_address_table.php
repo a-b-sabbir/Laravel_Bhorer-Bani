@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('representative_addresses', function (Blueprint $table) {
+        Schema::create('users_address', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('representative_id')->constrained('representatives');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('permanent_district');
             $table->string('permanent_sub_district');
             $table->string('permanent_municipality');
