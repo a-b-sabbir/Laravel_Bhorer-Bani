@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class RoleController extends Controller
 {
     // Display a listing of the roles.
     public function index()
     {
-        $roles = Role::with('parentRole')->get(); // Eager load the parent role
+        $roles = Role::all(); // Eager load the parent role
         return view('roles.index', compact('roles'));
     }
 

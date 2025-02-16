@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
-use App\Models\Advertisement;
 use Illuminate\Http\Request;
+use App\Models\Advertisements;
+use App\Http\Controllers\Controller;
 
 class AdvertisementController extends Controller
 {
     // Display a listing of the advertisements.
     public function index()
     {
-        $advertisements = Advertisement::all(); // Retrieve all advertisements
+        $advertisements = Advertisements::all(); // Retrieve all advertisements
         return view('advertisements.index', compact('advertisements')); // Return the view with the advertisements
     }
 
@@ -48,26 +49,26 @@ class AdvertisementController extends Controller
         }
 
         // Create the advertisement
-        Advertisement::create($validated);
+        Advertisements::create($validated);
 
         // Redirect back with success message
         return redirect()->route('advertisements.index')->with('success', 'Advertisement created successfully!');
     }
 
     // Display the specified advertisement.
-    public function show(Advertisement $advertisement)
+    public function show(Advertisements $advertisement)
     {
         return view('advertisements.show', compact('advertisement')); // Display the advertisement details
     }
 
     // Show the form for editing the specified advertisement.
-    public function edit(Advertisement $advertisement)
+    public function edit(Advertisements $advertisement)
     {
         return view('advertisements.edit', compact('advertisement')); // Return the form to edit an advertisement
     }
 
     // Update the specified advertisement in storage.
-    public function update(Request $request, Advertisement $advertisement)
+    public function update(Request $request, Advertisements $advertisement)
     {
         // Validate the incoming request data
         $validated = $request->validate([
@@ -101,7 +102,7 @@ class AdvertisementController extends Controller
     }
 
     // Remove the specified advertisement from storage.
-    public function destroy(Advertisement $advertisement)
+    public function destroy(Advertisements $advertisement)
     {
         // Delete the advertisement
         $advertisement->delete();

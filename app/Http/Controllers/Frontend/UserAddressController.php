@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
 use App\Models\User;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserAddressController extends Controller
 {
