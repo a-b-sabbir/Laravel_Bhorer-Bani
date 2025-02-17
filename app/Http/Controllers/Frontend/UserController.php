@@ -58,7 +58,7 @@ class UserController extends Controller
         User::create([
             'image' => $imagePath,
             'email' => $request->email,
-            'bangla_name' => $request->bangla_name,
+            'name' => $request->bangla_name,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'father_name' => $request->father_name,
@@ -72,6 +72,9 @@ class UserController extends Controller
             'responsible_place_name' => $request->responsible_place_name,
             'accept_terms_conditions' => $request->accept_terms_conditions,
             'password' => Hash::make($request->password),
+            'approval' => 'Pending',
+            'employee_id' => null,
+            'role_id' => 5,
         ]);
 
         return redirect()->route('users.index')->with('success', 'User created successfully.');
@@ -101,7 +104,7 @@ class UserController extends Controller
         $request->validate([
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'bangla_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'father_name' => 'required|string|max:255',

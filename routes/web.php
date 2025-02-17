@@ -9,7 +9,7 @@ use App\Http\Controllers\Frontend\AdvertisementController;
 use App\Http\Controllers\Frontend\UserAddressController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome')->name('welcome');
 });
 
 Route::resource('/advertisements', AdvertisementController::class);
@@ -21,5 +21,5 @@ Route::resource('/users', UserController::class);
 
 
 
-
+require __DIR__.'/admin.php';
 
