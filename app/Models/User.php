@@ -22,7 +22,7 @@ class User extends Authenticatable
         'image',
         'email',
         'password',
-        'bangla_name',
+        'name',
         'first_name',
         'last_name',
         'father_name',
@@ -38,7 +38,6 @@ class User extends Authenticatable
         'role_id',
     ];
 
-
     public function role()
     {
         return $this->belongsTo(Role::class,'role_id');
@@ -53,10 +52,10 @@ class User extends Authenticatable
         return $this->hasMany(News::class);
     }
 
-    /**
-     * Get the addresses of the representative.
-     */
-
+    protected $guarded = ['approval', 'employee_id'];
+    protected $attributes = [
+        'approval' => 'Pending',
+    ];
 
 
     /**
@@ -79,6 +78,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'approval' => 'string',
         ];
     }
 }
