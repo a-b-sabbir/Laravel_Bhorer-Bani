@@ -15,7 +15,7 @@ class UserAddressController extends Controller
     public function index()
     {
         $addresses = UserAddress::latest()->paginate(10);
-        return view('user_addresses.index', compact('addresses'));
+        return view('frontend.user_addresses.index', compact('addresses'));
     }
 
     /**
@@ -24,7 +24,7 @@ class UserAddressController extends Controller
     public function create()
     {
         $users = User::all();
-        return view('user_addresses.create', compact('users'));
+        return view('frontend.user_addresses.create', compact('users'));
     }
 
     /**
@@ -61,7 +61,7 @@ class UserAddressController extends Controller
      */
     public function show(UserAddress $user_address)
     {
-        return view('user_addresses.show', compact('user_address'));
+        return view('frontend.user_addresses.show', compact('user_address'));
     }
 
     /**
@@ -70,7 +70,7 @@ class UserAddressController extends Controller
     public function edit(UserAddress $user_address)
     {
         $users = User::all();
-        return view('user_addresses.edit', compact('user_address', 'users'));
+        return view('frontend.user_addresses.edit', compact('user_address', 'users'));
     }
 
     /**

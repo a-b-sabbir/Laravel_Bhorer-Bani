@@ -14,7 +14,7 @@ class NewsController extends Controller
     public function index()
     {
         $news = News::all(); // Retrieve all news articles
-        return view('news.index', compact('news')); // Return the view with the news articles
+        return view('frontend.news.index', compact('news')); // Return the view with the news articles
     }
 
     // Show the form for creating a new news article.
@@ -22,7 +22,7 @@ class NewsController extends Controller
     {
         $categories = Category::all(); // Get all categories
         $users = User::all(); // Get all users (for reporter selection)
-        return view('news.create', compact('categories', 'users')); // Return the form for creating a news article
+        return view('frontend.news.create', compact('categories', 'users')); // Return the form for creating a news article
     }
 
     // Store a newly created news article in storage.
@@ -69,7 +69,7 @@ class NewsController extends Controller
     // Display the specified news article.
     public function show(News $news)
     {
-        return view('news.show', compact('news')); // Display the news article details
+        return view('frontend.news.show', compact('news')); // Display the news article details
     }
 
     // Show the form for editing the specified news article.
@@ -77,7 +77,7 @@ class NewsController extends Controller
     {
         $categories = Category::all(); // Get all categories
         $users = User::all(); // Get all users (for reporter selection)
-        return view('news.edit', compact('news', 'categories', 'users')); // Return the form for editing a news article
+        return view('frontend.news.edit', compact('news', 'categories', 'users')); // Return the form for editing a news article
     }
 
     // Update the specified news article in storage.

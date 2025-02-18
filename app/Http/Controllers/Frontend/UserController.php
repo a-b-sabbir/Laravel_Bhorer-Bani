@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::latest()->paginate(10);
-        return view('users.index', compact('users'));
+        return view('frontend.users.index', compact('users'));
     }
 
     /**
@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('frontend.users.create');
     }
 
     /**
@@ -35,7 +35,7 @@ class UserController extends Controller
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'email' => 'required|email|unique:users,email',
-            'bangla_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'father_name' => 'required|string|max:255',
@@ -58,7 +58,7 @@ class UserController extends Controller
         User::create([
             'image' => $imagePath,
             'email' => $request->email,
-            'name' => $request->bangla_name,
+            'name' => $request->name,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'father_name' => $request->father_name,
@@ -85,7 +85,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        return view('frontend.users.show', compact('user'));
     }
 
     /**
@@ -93,7 +93,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit', compact('user'));
+        return view('frontend.users.edit', compact('user'));
     }
 
     /**
