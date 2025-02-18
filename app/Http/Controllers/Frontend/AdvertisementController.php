@@ -12,13 +12,13 @@ class AdvertisementController extends Controller
     public function index()
     {
         $advertisements = Advertisements::all(); // Retrieve all advertisements
-        return view('advertisements.index', compact('advertisements')); // Return the view with the advertisements
+        return view('frontend.advertisements.index', compact('advertisements')); // Return the view with the advertisements
     }
 
     // Show the form for creating a new advertisement.
     public function create()
     {
-        return view('advertisements.create'); // Return the form to create an advertisement
+        return view('frontend.advertisements.create'); // Return the form to create an advertisement
     }
 
     // Store a newly created advertisement in storage.
@@ -58,13 +58,13 @@ class AdvertisementController extends Controller
     // Display the specified advertisement.
     public function show(Advertisements $advertisement)
     {
-        return view('advertisements.show', compact('advertisement')); // Display the advertisement details
+        return view('frontend.advertisements.show', compact('advertisement')); // Display the advertisement details
     }
 
     // Show the form for editing the specified advertisement.
     public function edit(Advertisements $advertisement)
     {
-        return view('advertisements.edit', compact('advertisement')); // Return the form to edit an advertisement
+        return view('frontend.advertisements.edit', compact('advertisement')); // Return the form to edit an advertisement
     }
 
     // Update the specified advertisement in storage.

@@ -12,14 +12,14 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all(); // Eager load the parent role
-        return view('roles.index', compact('roles'));
+        return view('frontend.roles.index', compact('roles'));
     }
 
     // Show the form for creating a new role.
     public function create()
     {
         $parentRoles = Role::all(); // Get all roles to select from as parent roles
-        return view('roles.create', compact('parentRoles'));
+        return view('frontend.roles.create', compact('parentRoles'));
     }
 
     // Store a newly created role in storage.
@@ -43,14 +43,14 @@ class RoleController extends Controller
     public function show(Role $role)
     {
         $role->load('parentRole'); // Eager load the parent role
-        return view('roles.show', compact('role'));
+        return view('frontend.roles.show', compact('role'));
     }
 
     // Show the form for editing the specified role.
     public function edit(Role $role)
     {
         $parentRoles = Role::all(); // Get all available parent roles for updating
-        return view('roles.edit', compact('role', 'parentRoles'));
+        return view('frontend.roles.edit', compact('role', 'parentRoles'));
     }
 
     // Update the specified role in storage.

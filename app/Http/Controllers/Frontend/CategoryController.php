@@ -12,13 +12,13 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all(); // Retrieve all categories
-        return view('categories.index', compact('categories')); // Return the view with the categories
+        return view('frontend.categories.index', compact('categories')); // Return the view with the categories
     }
 
     // Show the form for creating a new category.
     public function create()
     {
-        return view('categories.create'); // Return the form to create a category
+        return view('frontend.categories.create'); // Return the form to create a category
     }
 
     // Store a newly created category in storage.
@@ -40,13 +40,13 @@ class CategoryController extends Controller
     // Display the specified category.
     public function show(Category $category)
     {
-        return view('categories.show', compact('category')); // Display the category details
+        return view('frontend.categories.show', compact('category')); // Display the category details
     }
 
     // Show the form for editing the specified category.
     public function edit(Category $category)
     {
-        return view('categories.edit', compact('category')); // Return the form to edit a category
+        return view('frontend.categories.edit', compact('category')); // Return the form to edit a category
     }
 
     // Update the specified category in storage.
