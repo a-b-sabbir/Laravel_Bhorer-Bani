@@ -15,7 +15,7 @@ class UserAddressController extends Controller
     public function index()
     {
         $addresses = UserAddress::latest()->paginate(10);
-        return view('frontend.user_addresses.index', compact('addresses'));
+        return view('frontend.users_address.index', compact('addresses'));
     }
 
     /**
@@ -24,7 +24,7 @@ class UserAddressController extends Controller
     public function create()
     {
         $users = User::all();
-        return view('frontend.user_addresses.create', compact('users'));
+        return view('frontend.users_address.create', compact('users'));
     }
 
     /**
@@ -53,30 +53,30 @@ class UserAddressController extends Controller
 
         UserAddress::create($request->all());
 
-        return redirect()->route('user_addresses.index')->with('success', 'User address created successfully.');
+        return redirect()->route('users-address.index')->with('success', 'User address created successfully.');
     }
 
     /**
      * Display the specified user address.
      */
-    public function show(UserAddress $user_address)
+    public function show(UserAddress $users_address)
     {
-        return view('frontend.user_addresses.show', compact('user_address'));
+        return view('frontend.users_address.show', compact('users_address'));
     }
 
     /**
      * Show the form for editing the specified user address.
      */
-    public function edit(UserAddress $user_address)
+    public function edit(UserAddress $users_address)
     {
         $users = User::all();
-        return view('frontend.user_addresses.edit', compact('user_address', 'users'));
+        return view('frontend.users_address.edit', compact('users_address', 'users'));
     }
 
     /**
      * Update the specified user address in storage.
      */
-    public function update(Request $request, UserAddress $user_address)
+    public function update(Request $request, UserAddress $users_address)
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
@@ -97,17 +97,17 @@ class UserAddressController extends Controller
             'current_house_road_number' => 'required|string|max:255',
         ]);
 
-        $user_address->update($request->all());
+        $users_address->update($request->all());
 
-        return redirect()->route('user_addresses.index')->with('success', 'User address updated successfully.');
+        return redirect()->route('users-address.index')->with('success', 'User address updated successfully.');
     }
 
     /**
      * Remove the specified user address from storage.
      */
-    public function destroy(UserAddress $user_address)
+    public function destroy(UserAddress $users_address)
     {
-        $user_address->delete();
-        return redirect()->route('user_addresses.index')->with('success', 'User address deleted successfully.');
+        $users_address->delete();
+        return redirect()->route('users-address.index')->with('success', 'User address deleted successfully.');
     }
 }
