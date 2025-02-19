@@ -22,3 +22,4 @@ Route::resource('/news', NewsController::class);
 Route::resource('/roles', RoleController::class);
 Route::resource('/users-address', UserAddressController::class); 
 Route::resource('/users', UserController::class);
+// Route::put('/users-address{users-address}', [UserAddressController::class,'update']); 
