@@ -15,7 +15,7 @@ class UserAddressController extends Controller
     public function index()
     {
         $addresses = UserAddress::latest()->paginate(10);
-        return view('frontend.user_addresses.index', compact('addresses'));
+        return view('frontend.users_address.index', compact('addresses'));
     }
 
     /**
@@ -24,7 +24,7 @@ class UserAddressController extends Controller
     public function create()
     {
         $users = User::all();
-        return view('frontend.user_addresses.create', compact('users'));
+        return view('frontend.users_address.create', compact('users'));
     }
 
     /**
@@ -53,7 +53,7 @@ class UserAddressController extends Controller
 
         UserAddress::create($request->all());
 
-        return redirect()->route('user_addresses.index')->with('success', 'User address created successfully.');
+        return redirect()->route('users-address.index')->with('success', 'User address created successfully.');
     }
 
     /**
@@ -61,7 +61,7 @@ class UserAddressController extends Controller
      */
     public function show(UserAddress $user_address)
     {
-        return view('frontend.user_addresses.show', compact('user_address'));
+        return view('frontend.users_address.show', compact('user_address'));
     }
 
     /**
@@ -70,7 +70,7 @@ class UserAddressController extends Controller
     public function edit(UserAddress $user_address)
     {
         $users = User::all();
-        return view('frontend.user_addresses.edit', compact('user_address', 'users'));
+        return view('frontend.users_address.edit', compact('user_address', 'users'));
     }
 
     /**
@@ -99,7 +99,7 @@ class UserAddressController extends Controller
 
         $user_address->update($request->all());
 
-        return redirect()->route('user_addresses.index')->with('success', 'User address updated successfully.');
+        return redirect()->route('users-address.index')->with('success', 'User address updated successfully.');
     }
 
     /**
@@ -108,6 +108,6 @@ class UserAddressController extends Controller
     public function destroy(UserAddress $user_address)
     {
         $user_address->delete();
-        return redirect()->route('user_addresses.index')->with('success', 'User address deleted successfully.');
+        return redirect()->route('users-address.index')->with('success', 'User address deleted successfully.');
     }
 }
