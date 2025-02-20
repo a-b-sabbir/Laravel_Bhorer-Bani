@@ -21,7 +21,7 @@ class News extends Model
         'subdistrict',
         'headline',
         'subtitle',
-        'category',
+        'categories',
         'content',
         'date',
         'reporter_id',
@@ -30,9 +30,11 @@ class News extends Model
         'status',
     ];
 
+    protected $casts = [
+        'categories' => 'array',
+    ];
     public function reporter()
     {
         return $this->belongsTo(User::class, 'reporter_id');
     }
-    
 }
