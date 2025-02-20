@@ -1,1 +1,1 @@
-I am index
+I am News index

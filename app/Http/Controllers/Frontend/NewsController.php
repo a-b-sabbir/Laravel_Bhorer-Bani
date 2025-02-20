@@ -14,15 +14,13 @@ class NewsController extends Controller
     public function index()
     {
         $news = News::all(); // Retrieve all news articles
-        return view('frontend.news.index', compact('news')); // Return the view with the news articles
+        return view('frontend.news.index', compact('news')); 
     }
 
     // Show the form for creating a new news article.
     public function create()
     {
-        $categories = Category::all(); // Get all categories
-        $users = User::all(); // Get all users (for reporter selection)
-        return view('frontend.news.create', compact('categories', 'users')); // Return the form for creating a news article
+        return view('frontend.news.create'); 
     }
 
     // Store a newly created news article in storage.
@@ -30,24 +28,22 @@ class NewsController extends Controller
     {
         // Validate the incoming request data
         $validated = $request->validate([
-            'thumbnail' => 'required|image|mimes:jpg,png,jpeg,gif',
-            'splash' => 'required|image|mimes:jpg,png,jpeg,gif',
+            'thumbnail' => 'nullable|image|mimes:jpg,png,jpeg,gif',
+            'splash' => 'nullable|image|mimes:jpg,png,jpeg,gif',
             'type' => 'required|in:Breaking,Regular,Headline',
-            'meta' => 'required|string|max:256',
-            'division' => 'required|string|max:255',
-            'district' => 'required|string|max:255',
-            'subdistrict' => 'required|string|max:255',
-            'category_1' => 'required|string|max:255',
-            'category_2' => 'nullable|string|max:255',
-            'category_3' => 'nullable|string|max:255',
+            'meta' => 'nullable|string|max:256',
+            'division' => 'nullable|string|max:255',
+            'district' => 'nullable|string|max:255',
+            'subdistrict' => 'nullable|string|max:255',
             'headline' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
+            'category' => 'nullable|string|max:255',
             'content' => 'required|string',
             'date' => 'required|date',
             'reporter_id' => 'required|exists:users,id',
-            'category_id' => 'required|exists:categories,id',
             'published_at' => 'nullable|date',
-            'status' => 'required|string|max:255',
+            'views' => 'nullable|integer|min:0',
+            'status' => 'required|in:Draft,Pending Approval,Published,Rejected',
         ]);
 
         // Handle file uploads (thumbnail, splash)
@@ -73,11 +69,10 @@ class NewsController extends Controller
     }
 
     // Show the form for editing the specified news article.
-    public function edit(News $news)
+    public function edit($news)
     {
-        $categories = Category::all(); // Get all categories
-        $users = User::all(); // Get all users (for reporter selection)
-        return view('frontend.news.edit', compact('news', 'categories', 'users')); // Return the form for editing a news article
+        $news = News::findOrFail($news); // Corrected method name
+        return view('frontend.news.edit', compact('news')); // Return the form for editing a news article
     }
 
     // Update the specified news article in storage.
@@ -88,21 +83,19 @@ class NewsController extends Controller
             'thumbnail' => 'nullable|image|mimes:jpg,png,jpeg,gif',
             'splash' => 'nullable|image|mimes:jpg,png,jpeg,gif',
             'type' => 'required|in:Breaking,Regular,Headline',
-            'meta' => 'required|string|max:256',
-            'division' => 'required|string|max:255',
-            'district' => 'required|string|max:255',
-            'subdistrict' => 'required|string|max:255',
-            'category_1' => 'required|string|max:255',
-            'category_2' => 'nullable|string|max:255',
-            'category_3' => 'nullable|string|max:255',
+            'meta' => 'nullable|string|max:256',
+            'division' => 'nullable|string|max:255',
+            'district' => 'nullable|string|max:255',
+            'subdistrict' => 'nullable|string|max:255',
             'headline' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
+            'category' => 'nullable|string|max:255',
             'content' => 'required|string',
             'date' => 'required|date',
             'reporter_id' => 'required|exists:users,id',
-            'category_id' => 'required|exists:categories,id',
             'published_at' => 'nullable|date',
-            'status' => 'required|string|max:255',
+            'views' => 'nullable|integer|min:0',
+            'status' => 'required|in:Draft,Pending Approval,Published,Rejected',
         ]);
 
         // Handle file uploads (thumbnail, splash)
