@@ -1,1 +1,1 @@
-I am create
+I am News create
